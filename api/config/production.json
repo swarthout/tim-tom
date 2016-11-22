@@ -1,0 +1,6 @@
+{
+  "host": "tim-tom-app.feathersjs.com",
+  "port": 80,
+  "postgres": "DATABASE_URL",
+  "public": "../public/"
+}

@@ -1,0 +1,6 @@
+{
+  "host": "localhost",
+  "port": 3030,
+  "postgres": "postgres://postgres:@localhost:5432/timTom",
+  "public": "../public/"
+}
