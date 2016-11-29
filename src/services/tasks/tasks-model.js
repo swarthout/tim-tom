@@ -14,7 +14,7 @@ module.exports = function (sequelize) {
       allowNull: false
     },
     timer: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: true
     }
   }, {

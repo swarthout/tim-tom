@@ -1,3 +1,10 @@
+
+var rest = feathers.rest('/api');
+var app = feathers()
+	.configure(rest.jquery(window.jQuery));
+
+var taskService = app.service('tasks');
+
 var minutes_text = $(".minutes");
 var seconds_text = $(".seconds");
 
@@ -5,9 +12,10 @@ var min_10x = Number(minutes_text[0]);
 var min_1x = Number(minutes_text[1]);
 var sec_10x = Number(seconds_text[0]);
 var sec_1x = Number(seconds_text[1]);
-var reset_time;
 
-var total_time = 25 * 60 * 1000; //total time in seconds, initially set to 25 minutes
+
+var total_time = 2 * 60 * 1000; //total time in seconds, initially set to 2 minutes
+var reset_time = total_time;
 var timer;
 
 /*Key notes on the functions:
@@ -24,7 +32,19 @@ Relevant variables:
 	'total_time' is the time variable that is changed everytime the timer counts down, and is incremented or decremented	
 		with the '+' and '-' buttons
 */
+//Compose template string
+String.prototype.compose = (function () {
+	var re = /\{{(.+?)\}}/g;
+	return function (o) {
+		return this.replace(re, function (_, k) {
+			return typeof o[k] != 'undefined' ? o[k] : '';
+		});
+	}
+} ());
+
 $(document).ready(function () {
+
+	taskService.find({}).then(tasks => tasks.forEach(addTask));
 
 	//Start button begins timer
 	$(".start").on("click", function () {
@@ -112,4 +132,23 @@ $(document).ready(function () {
 		$(".minutes").text(min_10x.toString() + min_1x.toString());
 	});
 
+	$(".save").on('click', function () {
+		var description = $(".timerDescription").val();
+		console.log('description', description);
+		var timer = $(".minutes").text() + ":" + $(".seconds").text();
+		taskService.create({
+			timer: timer,
+			description: description
+		}).then(addTask);
+	});
+
+	function addTask(task) {
+		var row = '<tr>' +
+			'<td>{{id}}</td>' +
+			'<td>{{timer}}</td>' +
+			'<td>{{description}}</td>' +
+			'</tr>';
+
+		$(".timerTable > tbody").append(row.compose(task));
+	};
 });

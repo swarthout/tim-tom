@@ -7,3 +7,10 @@ body{
 .block-item {
 	padding-bottom: 20px;
 }
+.primary {
+	background-color: #c52c2c;
+	color: white;
+}
+th {
+	text-align: center;
+}
