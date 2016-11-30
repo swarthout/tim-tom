@@ -11,7 +11,7 @@ module.exports = {
       env: {},
       env_production: {
         NODE_ENV: "production",
-        DATABASE_URL: "postgres://mi362db.cgdbfedxvmkp.us-west-2.rds.amazonaws.com:5432/mi361"
+        DATABASE_URL: "postgresql://mikemichaels418:mi361project@mi362db.cgdbfedxvmkp.us-west-2.rds.amazonaws.com/mi361"
       }
     }
   ]
